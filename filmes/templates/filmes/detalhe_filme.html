@@ -27,11 +27,28 @@
         {% endfor %}
     </ul>
 
+    {% if user.is_authenticated %}
+    <a href="{% url 'adicionar_review' filme.id %}">Adicionar Review</a>
+    {% else %}
+    <p><a href="{% url 'login' %}">Faça login</a> para adicionar uma review.</p>
+    {% endif %}
+
     <!-- Botão para voltar à lista de filmes -->
     <p>
         <a href="{% url 'lista_filmes' %}">
             Voltar à Lista de Filmes
         </a>
     </p>
+
+    {% if user.is_staff %}
+    <!-- Botão de deletar (só visível para admins) -->
+    <form method="POST" action="{% url 'deletar_filme' filme.id %}" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit" style="background-color: red; color: white; padding: 10px; border-radius: 5px;">
+            Deletar Filme
+        </button>
+    </form>
+    {% endif %}
+    
 </body>
 </html>
