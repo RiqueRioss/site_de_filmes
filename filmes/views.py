@@ -3,6 +3,7 @@ from .models import Filme, Review
 from django.contrib.auth.decorators import login_required
 from django.db.models import Avg
 from .forms import FilmeForm
+from django.contrib import messages
 
 def lista_filmes(request):
     filmes = Filme.objects.annotate(media_notas=Avg('reviews__nota'))  # Calcula a média das notas
@@ -47,3 +48,18 @@ def adicionar_filme(request):
         form = FilmeForm()
 
     return render(request, 'filmes/adicionar_filme.html', {'form': form})
+
+@login_required
+def deletar_filme(request, filme_id):
+    filme = get_object_or_404(Filme, id=filme_id)
+
+    # Verifica se o usuário é admin
+    if not request.user.is_staff:
+        messages.error(request, "Você não tem permissão para deletar filmes.")
+        return redirect('lista_filmes')  # Redireciona para a lista de filmes se não for admin
+
+    # Deleta o filme e suas reviews
+    filme.delete()
+
+    messages.success(request, f'O filme "{filme.titulo}" foi deletado com sucesso!')
+    return redirect('lista_filmes')  # Redireciona de volta para a lista de filmes

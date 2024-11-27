@@ -39,5 +39,16 @@
             Voltar à Lista de Filmes
         </a>
     </p>
+
+    {% if user.is_staff %}
+    <!-- Botão de deletar (só visível para admins) -->
+    <form method="POST" action="{% url 'deletar_filme' filme.id %}" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit" style="background-color: red; color: white; padding: 10px; border-radius: 5px;">
+            Deletar Filme
+        </button>
+    </form>
+    {% endif %}
+    
 </body>
 </html>
