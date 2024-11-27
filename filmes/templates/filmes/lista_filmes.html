@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lista de Filmes</title>
+</head>
+<body>
+    <h1>Filmes Disponíveis</h1>
+    <ul>
+        {% for filme in filmes %}
+        <li>
+            <a href="{% url 'detalhe_filme' filme.id %}">
+                <img src="{{ filme.imagem }}" alt="{{ filme.titulo }}" style="width: 100px;">
+                <h2>{{ filme.titulo }}</h2>
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

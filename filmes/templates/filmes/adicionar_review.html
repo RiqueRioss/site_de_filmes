@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Adicionar Review</title>
+</head>
+<body>
+    <h1>Adicionar Review para {{ filme.titulo }}</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="nota">Nota (1-10):</label>
+        <input type="number" id="nota" name="nota" min="1" max="10" required>
+        <br>
+        <label for="comentario">Comentário:</label>
+        <textarea id="comentario" name="comentario" required></textarea>
+        <br>
+        <button type="submit">Enviar</button>
+    </form>
+</body>
+</html>
