@@ -27,6 +27,12 @@
         {% endfor %}
     </ul>
 
+    {% if user.is_authenticated %}
+    <a href="{% url 'adicionar_review' filme.id %}">Adicionar Review</a>
+    {% else %}
+    <p><a href="{% url 'login' %}">Faça login</a> para adicionar uma review.</p>
+    {% endif %}
+
     <!-- Botão para voltar à lista de filmes -->
     <p>
         <a href="{% url 'lista_filmes' %}">
