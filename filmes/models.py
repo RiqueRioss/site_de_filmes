@@ -19,3 +19,11 @@ class Review(models.Model):
 
     def __str__(self):
         return f"Review de {self.usuario.username} para {self.filme.titulo}"
+
+class FilmeSegundaLista(models.Model):
+    titulo = models.CharField(max_length=255)
+    imagem = models.URLField(blank=True, null=True)  # URL para a imagem do filme
+    descricao = models.TextField()
+
+    def __str__(self):
+        return self.titulo

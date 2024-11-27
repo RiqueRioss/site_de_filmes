@@ -12,6 +12,21 @@ def lista_filmes(request):
         'is_admin': request.user.is_staff  # Passa a informação se o usuário é admin
     })
 
+from .models import FilmeSegundaLista
+from .forms import FilmeSegundaListaForm
+def segunda_lista_filmes(request):
+    filmes = FilmeSegundaLista.objects.all()  # Filmes específicos da segunda lista
+    form = FilmeSegundaListaForm()
+
+    # Verifica se o método da requisição é POST, ou seja, se o usuário está enviando um formulário
+    if request.method == 'POST':
+        form = FilmeSegundaListaForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()  # Salva o filme na segunda lista
+            return redirect('segunda_lista_filmes')  # Redireciona para a página atual após adicionar o filme
+
+    return render(request, 'filmes/segunda_lista_filmes.html', {'filmes': filmes, 'form': form})
+
 def detalhe_filme(request, filme_id):
     filme = get_object_or_404(Filme, id=filme_id)
     reviews = filme.reviews.all()

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Segunda Lista de Filmes</title>
+</head>
+<body>
+    <h1>Segunda Lista de Filmes</h1>
+
+    <!-- Exibe os filmes na segunda lista -->
+    <ul>
+        {% for filme in filmes %}
+        <li>
+            <!-- Usando a URL da imagem fornecida -->
+            <img src="{{ filme.imagem}}" alt="{{ filme.titulo }}" style="width: 100px;">
+            <a href="#">{{ filme.titulo }}</a>
+        </li>
+        {% empty %}
+        <p>Ainda não há filmes nesta lista.</p>
+        {% endfor %}
+    </ul>
+
+    <!-- Formulário para adicionar um novo filme -->
+    <h2>Adicionar um novo Filme</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Adicionar Filme</button>
+    </form>
+
+    <p><a href="{% url 'lista_filmes' %}">Voltar à Lista Principal de Filmes</a></p>
+</body>
+</html>

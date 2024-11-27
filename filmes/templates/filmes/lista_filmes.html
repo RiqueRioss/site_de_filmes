@@ -4,6 +4,10 @@
     <title>Lista de Filmes</title>
 </head>
 <body>
+
+    <!-- Link para a segunda lista de filmes -->
+    <p><a href="{% url 'segunda_lista_filmes' %}">Ver Outra Lista de Filmes</a></p>
+    
     <h1>Filmes Disponíveis</h1>
 
     {% if is_admin %}
