@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'usuarios',
     'filmes',
-    'roleta_app'
+    'roleta_app',
 ]
 
 MIDDLEWARE = [
