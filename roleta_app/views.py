@@ -1,10 +1,10 @@
 import random
 from django.shortcuts import render
-from filmes.models import Filme
+from filmes.models import FilmeSegundaLista
 
 def roleta(request):
     # Configuração da roleta (filmes)
-    filmes = Filme.objects.all()
+    filmes = FilmeSegundaLista.objects.all()
     
     if not filmes.exists():
         resultado = "Sem filmes"

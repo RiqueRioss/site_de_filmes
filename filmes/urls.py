@@ -10,4 +10,6 @@ urlpatterns = [
 
     path('adicionar/', views.adicionar_filme, name='adicionar_filme'),  # URL para adicionar filmes
     path('<int:filme_id>/deletar/', views.deletar_filme, name='deletar_filme'),  # URL para deletar filme
+
+    path('mover-filme/<int:filme_id>/', views.mover_filme, name='mover_filme'),
 ]

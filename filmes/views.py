@@ -78,3 +78,20 @@ def deletar_filme(request, filme_id):
 
     messages.success(request, f'O filme "{filme.titulo}" foi deletado com sucesso!')
     return redirect('lista_filmes')  # Redireciona de volta para a lista de filmes
+
+def mover_filme(request, filme_id):
+    # Obter o filme da segunda lista
+    filme_segunda_lista = get_object_or_404(FilmeSegundaLista, id=filme_id)
+
+    # Criar o filme na primeira lista
+    Filme.objects.create(
+        titulo=filme_segunda_lista.titulo,
+        imagem=filme_segunda_lista.imagem,
+        descricao=filme_segunda_lista.descricao
+    )
+
+    # Remover o filme da segunda lista
+    filme_segunda_lista.delete()
+
+    # Redirecionar para a segunda lista de filmes
+    return redirect('segunda_lista_filmes')

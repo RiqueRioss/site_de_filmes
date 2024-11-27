@@ -13,11 +13,25 @@
             <!-- Usando a URL da imagem fornecida -->
             <img src="{{ filme.imagem}}" alt="{{ filme.titulo }}" style="width: 100px;">
             <a href="#">{{ filme.titulo }}</a>
+
+            <!-- Botão para mover para a primeira lista -->
+            <form action="{% url 'mover_filme' filme.id %}" method="POST">
+                {% csrf_token %}
+                <button type="submit">Mover para a Primeira Lista</button>
+            </form>
+
         </li>
         {% empty %}
         <p>Ainda não há filmes nesta lista.</p>
         {% endfor %}
     </ul>
+
+    <!-- Botão para a página de roleta -->
+    <a href="{% url 'roleta' %}">
+        <button style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; cursor: pointer;">
+            Ir para a Roleta
+        </button>
+    </a>
 
     <!-- Formulário para adicionar um novo filme -->
     <h2>Adicionar um novo Filme</h2>
