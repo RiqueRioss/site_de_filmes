@@ -8,10 +8,15 @@
     <ul>
         {% for filme in filmes %}
         <li>
-            <a href="{% url 'detalhe_filme' filme.id %}">
-                <img src="{{ filme.imagem }}" alt="{{ filme.titulo }}" style="width: 100px;">
-                <h2>{{ filme.titulo }}</h2>
-            </a>
+            <img src="{{ filme.imagem }}" alt="{{ filme.titulo }}" style="width: 100px;">
+            <a href="{% url 'detalhe_filme' filme.id %}">{{ filme.titulo }}</a>
+            <p>Média das notas: 
+                {% if filme.media_notas %}
+                    {{ filme.media_notas|floatformat:1 }}
+                {% else %}
+                    Sem avaliações
+                {% endif %}
+            </p>
         </li>
         {% endfor %}
     </ul>
