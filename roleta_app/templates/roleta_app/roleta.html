@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roleta</title>
+</head>
+<body>
+    <h1>Resultado da Roleta</h1>
+    <p>Você ganhou: {{ resultado.titulo }}</p>
+    <p>Descrição: {{ resultado.imagem }}</p>
+    <form method="get" action="{% url 'roleta' %}">
+        <button type="submit">Girar Novamente</button>
+    </form>
+</body>
+</html>
