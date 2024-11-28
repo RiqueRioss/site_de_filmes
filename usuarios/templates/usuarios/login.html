@@ -2,13 +2,9 @@
 <html>
 <head>
     <title>Login</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'usuarios/login.css' %}">
 </head>
 <body>
     <h1>Login</h1>
-    <div class="login-container">
-        <h1>Login</h1>
 
     <!-- Exibe mensagens de erro -->
     {% if messages %}
@@ -31,30 +27,5 @@
     </form>
 
     <p>Não tem uma conta? <a href="{% url 'register' %}">Registre-se aqui</a>.</p>
-        <!-- Exibe mensagens de erro -->
-        {% if messages %}
-        <ul>
-            {% for message in messages %}
-            <li style="color: red;">{{ message }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-        
-        <form method="post">
-            {% csrf_token %}
-            <div class="form-group">
-            <label for="username">Usuário:</label>
-            <input type="text" id="username" name="username" required>
-            </div>
-            <br>
-            <div class="form-group">
-            <label for="password">Senha:</label>
-            <input type="password" id="password" name="password" required>
-            <br>
-            </div>
-            <button type="submit">Entrar</button>
-        </form>
-        <p>Não tem uma conta? <a href="{% url 'register' %}">Registre-se aqui</a>.</p>
-    </div>
 </body>
 </html>
