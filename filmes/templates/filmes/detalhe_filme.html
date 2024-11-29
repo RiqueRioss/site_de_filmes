@@ -2,53 +2,64 @@
 <html>
 <head>
     <title>{{ filme.titulo }}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'filmes/detalhes.css' %}">
 </head>
 <body>
-    <h1>{{ filme.titulo }}</h1>
-    <img src="{{ filme.imagem }}" alt="{{ filme.titulo }}" style="width: 300px;">
-    <p>{{ filme.descricao }}</p>
+    <div class="container">
+            <div class="movie-details">
+                <h1 class="movie-title">{{ filme.titulo }}</h1>
+                <div class="movie-info">
+                    <img src="{{ filme.imagem }}" alt="{{ filme.titulo }}" style="width: 300px;" class="movie-image">
+                    <div class="movie-meta">
+                        <p>{{ filme.descricao }}</p>
 
-    <h2>Média das Notas</h2>
-    {% if media_notas %}
-        <p>A média das notas para este filme é: <strong>{{ media_notas|floatformat:1 }}</strong></p>
-    {% else %}
-        <p>Este filme ainda não possui reviews.</p>
-    {% endif %}
+                        <h2>Média das Notas</h2>
+                        {% if media_notas %}
+                            <p class="average-rating">A média das notas para este filme é: <strong>{{ media_notas|floatformat:1 }}</strong></p>
+                        {% else %}
+                            <p>Este filme ainda não possui reviews.</p>
+                        {% endif %}
+                        <div class="reviews">
+                            <h2>Reviews</h2>
+                            <ul>
+                                {% for review in reviews %}
+                                <li>
+                                    <strong>{{ review.usuario.username }}</strong> - Nota: {{ review.nota }}
+                                    <p>{{ review.comentario }}</p>
+                                </li>
+                                {% empty %}
+                                <p>Nenhuma review ainda. Seja o primeiro a analisar!</p>
+                                {% endfor %}
+                            </ul>
 
-    <h2>Reviews</h2>
-    <ul>
-        {% for review in reviews %}
-        <li>
-            <strong>{{ review.usuario.username }}</strong> - Nota: {{ review.nota }}
-            <p>{{ review.comentario }}</p>
-        </li>
-        {% empty %}
-        <p>Nenhuma review ainda. Seja o primeiro a analisar!</p>
-        {% endfor %}
-    </ul>
+                            {% if user.is_authenticated %}
+                            <a href="{% url 'adicionar_review' filme.id %}">Adicionar Review</a>
+                            {% else %}
+                            <p><a href="{% url 'login' %}">Faça login</a> para adicionar uma review.</p>
+                            {% endif %}
 
-    {% if user.is_authenticated %}
-    <a href="{% url 'adicionar_review' filme.id %}">Adicionar Review</a>
-    {% else %}
-    <p><a href="{% url 'login' %}">Faça login</a> para adicionar uma review.</p>
-    {% endif %}
+                            <!-- Botão para voltar à lista de filmes -->
+                            <p>
+                                <a href="{% url 'lista_filmes' %}">
+                                    Voltar à Lista de Filmes
+                                </a>
+                            </p>
 
-    <!-- Botão para voltar à lista de filmes -->
-    <p>
-        <a href="{% url 'lista_filmes' %}">
-            Voltar à Lista de Filmes
-        </a>
-    </p>
-
-    {% if user.is_staff %}
-    <!-- Botão de deletar (só visível para admins) -->
-    <form method="POST" action="{% url 'deletar_filme' filme.id %}" style="display:inline;">
-        {% csrf_token %}
-        <button type="submit" style="background-color: red; color: white; padding: 10px; border-radius: 5px;">
-            Deletar Filme
-        </button>
-    </form>
-    {% endif %}
-    
+                            {% if user.is_staff %}
+                            <!-- Botão de deletar (só visível para admins) -->
+                            <form method="POST" action="{% url 'deletar_filme' filme.id %}" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" style="background-color: red; color: white; padding: 10px; border-radius: 5px;">
+                                    Deletar Filme
+                                </button>
+                            </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>         
 </body>
 </html>
