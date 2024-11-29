@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Segunda Lista de Filmes</title>
+    <script>
+        // Função para roletar filme usando AJAX
+        async function roletarFilme() {
+            try {
+                const response = await fetch("{% url 'roleta' %}", {
+                    method: "GET",
+                    headers: {
+                        "X-Requested-With": "XMLHttpRequest"  // Define que é uma requisição AJAX
+                    }
+                });
+                const data = await response.json();
+
+                // Atualiza o DOM com os dados retornados
+                const resultadoDiv = document.getElementById("resultado-roleta");
+                resultadoDiv.innerHTML = `
+                    <h3>Resultado da Roleta</h3>
+                    <p>Você ganhou: ${data.titulo}</p>
+                    <img src="${data.imagem}" alt="${data.titulo}" style="width: 300px;">
+                    <p>Descrição: ${data.descricao}</p>
+                `;
+            } catch (error) {
+                console.error("Erro ao roletar filme:", error);
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Segunda Lista de Filmes</h1>
+
+    <!-- Exibe os filmes na segunda lista -->
+    <ul>
+        {% for filme in filmes %}
+        <li>
+            <img src="{{ filme.imagem}}" alt="{{ filme.titulo }}" style="width: 100px;">
+            <a href="#">{{ filme.titulo }}</a>
+
+            <!-- Botão para mover para a primeira lista -->
+            <form action="{% url 'mover_filme' filme.id %}" method="POST">
+                {% csrf_token %}
+                <button type="submit">Mover para a Primeira Lista</button>
+            </form>
+        </li>
+        {% empty %}
+        <p>Ainda não há filmes nesta lista.</p>
+        {% endfor %}
+    </ul>
+
+    <!-- Botão para roletar filme -->
+    <button onclick="roletarFilme()" style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; cursor: pointer;">
+        Roletar Filme
+    </button>
+
+    <!-- Div onde o resultado da roleta será exibido -->
+    <div id="resultado-roleta" style="margin-top: 20px;"></div>
+
+    <!-- Formulário para adicionar um novo filme -->
+    <h2>Adicionar um novo Filme</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Adicionar Filme</button>
+    </form>
+
+    <p><a href="{% url 'lista_filmes' %}">Voltar à Lista Principal de Filmes</a></p>
+</body>
+</html>

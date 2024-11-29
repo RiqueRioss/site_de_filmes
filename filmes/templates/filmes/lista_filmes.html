@@ -7,14 +7,9 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'filmes/listafilmes.css' %}">
     <div class="container">
-        <h1 class="page-title">Filmes Assistidos</h1>
-        {% if is_admin %}
-        <!-- Botão para adicionar filme (só visível para admins) -->
-        <a href="{% url 'adicionar_filme' %}" style="background-color: #28a745; color: white; padding: 10px; text-decoration: none; border-radius: 5px;">
-            Adicionar Filme
-        </a>
-        <br><br>
-        {% endif %}
+      <h1 class="page-title">Filmes Assistidos</h1>
+    <!-- Link para a segunda lista de filmes -->
+    <p><a href="{% url 'segunda_lista_filmes' %}">Ver Outra Lista de Filmes</a></p>
 
         <ul>
             <div class="movie-list">

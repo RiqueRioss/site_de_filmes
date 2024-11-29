@@ -8,7 +8,9 @@
 <body>
     <h1>Resultado da Roleta</h1>
     <p>Você ganhou: {{ resultado.titulo }}</p>
-    <p>Descrição: {{ resultado.imagem }}</p>
+    <img src="{{ resultado.imagem }}" alt="{{ filme.titulo }}" style="width: 300px;">
+
+    <p>Descrição: {{ resultado.descricao }}</p>
     <form method="get" action="{% url 'roleta' %}">
         <button type="submit">Girar Novamente</button>
     </form>

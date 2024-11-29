@@ -12,6 +12,21 @@ def lista_filmes(request):
         'is_admin': request.user.is_staff  # Passa a informação se o usuário é admin
     })
 
+from .models import FilmeSegundaLista
+from .forms import FilmeSegundaListaForm
+def segunda_lista_filmes(request):
+    filmes = FilmeSegundaLista.objects.all()  # Filmes específicos da segunda lista
+    form = FilmeSegundaListaForm()
+
+    # Verifica se o método da requisição é POST, ou seja, se o usuário está enviando um formulário
+    if request.method == 'POST':
+        form = FilmeSegundaListaForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()  # Salva o filme na segunda lista
+            return redirect('segunda_lista_filmes')  # Redireciona para a página atual após adicionar o filme
+
+    return render(request, 'filmes/segunda_lista_filmes.html', {'filmes': filmes, 'form': form})
+
 def detalhe_filme(request, filme_id):
     filme = get_object_or_404(Filme, id=filme_id)
     reviews = filme.reviews.all()
@@ -63,3 +78,20 @@ def deletar_filme(request, filme_id):
 
     messages.success(request, f'O filme "{filme.titulo}" foi deletado com sucesso!')
     return redirect('lista_filmes')  # Redireciona de volta para a lista de filmes
+
+def mover_filme(request, filme_id):
+    # Obter o filme da segunda lista
+    filme_segunda_lista = get_object_or_404(FilmeSegundaLista, id=filme_id)
+
+    # Criar o filme na primeira lista
+    Filme.objects.create(
+        titulo=filme_segunda_lista.titulo,
+        imagem=filme_segunda_lista.imagem,
+        descricao=filme_segunda_lista.descricao
+    )
+
+    # Remover o filme da segunda lista
+    filme_segunda_lista.delete()
+
+    # Redirecionar para a segunda lista de filmes
+    return redirect('segunda_lista_filmes')
