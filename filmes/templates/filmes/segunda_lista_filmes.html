@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Segunda Lista de Filmes</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'filmes/segundalista.css' %}">
     <script>
         // Função para roletar filme usando AJAX
         async function roletarFilme() {
@@ -31,42 +33,51 @@
     </script>
 </head>
 <body>
-    <h1>Segunda Lista de Filmes</h1>
+    <div class="container">
+        <h1 class="page-title">Filmes para assistirmos</h1>
 
-    <!-- Exibe os filmes na segunda lista -->
-    <ul>
-        {% for filme in filmes %}
-        <li>
-            <img src="{{ filme.imagem}}" alt="{{ filme.titulo }}" style="width: 100px;">
-            <a href="#">{{ filme.titulo }}</a>
+        <!-- Exibe os filmes na segunda lista -->
+        <section class="movie-list-section">
+        <ul>
+            <div class="movie-list">
+                {% for filme in filmes %}
+                    <li>
+                        <div class="movie-item">
+                            <img src="{{ filme.imagem}}" alt="{{ filme.titulo }}" class="movie-image" style="width: 100px;">
+                            <a class="movie-title" href="#">{{ filme.titulo }}</a>
+                            <!-- Botão para mover para a primeira lista -->
+                            <form action="{% url 'mover_filme' filme.id %}" method="POST">
+                                {% csrf_token %}
+                                <button class="send-button" type="submit">Mover para a Primeira Lista</button>
+                            </form>
+                        </div>
+                    </li>
+            </div>
+            </li>
+            {% empty %}
+            <p>Ainda não há filmes nesta lista.</p>
+            {% endfor %}
+        </ul>
 
-            <!-- Botão para mover para a primeira lista -->
-            <form action="{% url 'mover_filme' filme.id %}" method="POST">
-                {% csrf_token %}
-                <button type="submit">Mover para a Primeira Lista</button>
-            </form>
-        </li>
-        {% empty %}
-        <p>Ainda não há filmes nesta lista.</p>
-        {% endfor %}
-    </ul>
+        <!-- Botão para roletar filme -->
+        <button class="draw-button"   onclick="roletarFilme()" style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; cursor: pointer;">
+            Roletar Filme
+        </button>
+        </section>
 
-    <!-- Botão para roletar filme -->
-    <button onclick="roletarFilme()" style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; cursor: pointer;">
-        Roletar Filme
-    </button>
+        <!-- Div onde o resultado da roleta será exibido -->
+        <div id="resultado-roleta" style="margin-top: 20px;"></div>
 
-    <!-- Div onde o resultado da roleta será exibido -->
-    <div id="resultado-roleta" style="margin-top: 20px;"></div>
-
-    <!-- Formulário para adicionar um novo filme -->
-    <h2>Adicionar um novo Filme</h2>
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Adicionar Filme</button>
-    </form>
-
-    <p><a href="{% url 'lista_filmes' %}">Voltar à Lista Principal de Filmes</a></p>
+        <!-- Formulário para adicionar um novo filme -->
+        <section class="add-movie-section">
+            <h2>Adicionar um novo Filme</h2>
+                <form method="POST" enctype="multipart/form-data" class="movie-form">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="submit-button">Adicionar Filme</button>
+                </form>
+        </section>
+        <p><a href="{% url 'lista_filmes' %}">Voltar à Lista Principal de Filmes</a></p>
+    </div>
 </body>
 </html>
