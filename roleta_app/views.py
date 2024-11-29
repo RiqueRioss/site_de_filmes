@@ -1,15 +1,23 @@
 import random
 from django.shortcuts import render
 from filmes.models import FilmeSegundaLista
+from django.http import JsonResponse
 
 def roleta(request):
-    # Configuração da roleta (filmes)
     filmes = FilmeSegundaLista.objects.all()
     
     if not filmes.exists():
-        resultado = "Sem filmes"
+        resultado = {"titulo": "Sem filmes", "imagem": "", "descricao": ""}
     else:
-        resultado = random.choice(filmes)
+        filme = random.choice(filmes)
+        resultado = {
+            "titulo": filme.titulo,
+            "imagem": filme.imagem,  # Certifique-se de que o campo é `imagem`
+            "descricao": filme.descricao
+        }
     
-    # Renderiza a página e passa o resultado como contexto
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        return JsonResponse(resultado)  # Retorna JSON se for uma requisição AJAX
+    
+    # Renderiza a página para requisições normais (se necessário)
     return render(request, 'roleta_app/roleta.html', {'resultado': resultado})
