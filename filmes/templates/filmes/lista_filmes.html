@@ -4,31 +4,40 @@
     <title>Lista de Filmes</title>
 </head>
 <body>
-    <h1>Filmes Disponíveis</h1>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'filmes/listafilmes.css' %}">
+    <div class="container">
+        <h1 class="page-title">Filmes Assistidos</h1>
+        {% if is_admin %}
+        <!-- Botão para adicionar filme (só visível para admins) -->
+        <a href="{% url 'adicionar_filme' %}" style="background-color: #28a745; color: white; padding: 10px; text-decoration: none; border-radius: 5px;">
+            Adicionar Filme
+        </a>
+        <br><br>
+        {% endif %}
 
-    {% if is_admin %}
-    <!-- Botão para adicionar filme (só visível para admins) -->
-    <a href="{% url 'adicionar_filme' %}" style="background-color: #28a745; color: white; padding: 10px; text-decoration: none; border-radius: 5px;">
-        Adicionar Filme
-    </a>
-    <br><br>
-    {% endif %}
-
-    <ul>
-        {% for filme in filmes %}
-        <li>
-            <!-- A imagem é um link que abre a imagem em uma nova aba -->
-            <img src="{{ filme.imagem }}" alt="{{ filme.titulo }}" style="width: 100px;">
-            <a href="{% url 'detalhe_filme' filme.id %}">{{ filme.titulo }}</a>
-            <p>Média das notas: 
-                {% if filme.media_notas %}
-                    {{ filme.media_notas|floatformat:1 }}
-                {% else %}
-                    Sem avaliações
-                {% endif %}
-            </p>
-        </li>
-        {% endfor %}
-    </ul>
+        <ul>
+            <div class="movie-list">
+            {% for filme in filmes %}
+                <div class="movie-item">
+                    <li>
+                    <!-- A imagem é um link que abre a imagem em uma nova aba -->
+                    <img src="{{ filme.imagem }}" alt="{{ filme.titulo }}" class="movie-image">
+                    <div class="movie-info">
+                            <a class="movie-title" href="{% url 'detalhe_filme' filme.id %}">{{ filme.titulo }}</a>
+                            <p class="average-rating">  Média das notas: 
+                                {% if filme.media_notas %}
+                                    {{ filme.media_notas|floatformat:1 }}
+                                {% else %}
+                                    Sem avaliações
+                                {% endif %}
+                            </p>
+                        </div>
+                        </li>
+                    </div>
+                {% endfor %}
+            </div>
+        </ul>
+    </div>
 </body>
 </html>
