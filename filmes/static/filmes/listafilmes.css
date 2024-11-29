@@ -67,3 +67,24 @@ body {
     color: #660096; 
     margin-top: 5px;
 }
+a.redirect-button {
+    display: inline-block; /* Faz o link se comportar como um botão */
+    background-color: #007bff; /* Cor de fundo azul */
+    color: #fff; /* Texto branco */
+    padding: 10px 20px; /* Espaçamento interno para parecer um botão */
+    border-radius: 5px; /* Cantos arredondados */
+    text-decoration: none; /* Remove sublinhado */
+    font-weight: bold; /* Texto em negrito */
+    text-align: center; /* Centraliza o texto */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Efeito suave */
+}
+
+a.redirect-button:hover {
+    background-color: #0056b3; /* Cor mais escura no hover */
+    transform: scale(1.05); /* Aumenta ligeiramente o tamanho */
+}
+
+a.redirect-button:active {
+    transform: scale(0.95); /* Efeito de clique */
+}
+

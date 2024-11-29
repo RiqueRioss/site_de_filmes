@@ -1,7 +1,7 @@
 /* Estilos gerais */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
+    background:linear-gradient(to right, #8a32bd, #412455);
     margin: 0;
     padding: 0;
 }
@@ -32,7 +32,7 @@ body {
 }
 
 .movie-item {
-    background-color: #fff;
+    background-color: #08014d;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
@@ -53,7 +53,7 @@ body {
 
 .movie-title {
     font-size: 20px;
-    color: #333;
+    color: #ced6f3;
     margin: 10px 0;
 }
 
@@ -64,7 +64,7 @@ body {
 }
 
 .send-button {
-    background-color: #2ecc71;
+    background-color: #009ea3;
     color: #fff;
     padding: 10px 15px;
     border: none;
@@ -121,7 +121,7 @@ body {
 }
 
 .submit-button {
-    background-color: #007bff;
+    background-color: #3d97f7;
     color: #fff;
     padding: 10px 15px;
     border: none;
@@ -132,4 +132,25 @@ body {
 
 .submit-button:hover {
     background-color: #0056b3;
+}
+
+a.redirect-button {
+    display: inline-block; /* Faz o link se comportar como um botão */
+    background-color: #007bff; /* Cor de fundo azul */
+    color: #fff; /* Texto branco */
+    padding: 10px 20px; /* Espaçamento interno para parecer um botão */
+    border-radius: 5px; /* Cantos arredondados */
+    text-decoration: none; /* Remove sublinhado */
+    font-weight: bold; /* Texto em negrito */
+    text-align: center; /* Centraliza o texto */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Efeito suave */
+}
+
+a.redirect-button:hover {
+    background-color: #0056b3; /* Cor mais escura no hover */
+    transform: scale(1.05); /* Aumenta ligeiramente o tamanho */
+}
+
+a.redirect-button:active {
+    transform: scale(0.95); /* Efeito de clique */
 }
