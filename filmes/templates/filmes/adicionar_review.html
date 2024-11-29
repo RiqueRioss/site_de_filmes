@@ -2,18 +2,27 @@
 <html>
 <head>
     <title>Adicionar Review</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'filmes/adicionarreview.css' %}">
 </head>
 <body>
-    <h1>Adicionar Review para {{ filme.titulo }}</h1>
-    <form method="post">
-        {% csrf_token %}
-        <label for="nota">Nota (1-10):</label>
-        <input type="number" id="nota" name="nota" min="1" max="10" required>
-        <br>
-        <label for="comentario">Comentário:</label>
-        <textarea id="comentario" name="comentario" required></textarea>
-        <br>
-        <button type="submit">Enviar</button>
+    <div class="container">
+        <h1 class="page-title">Adicionar Review para {{ filme.titulo }}</h1>
+        <form method="post" class="review-form" >
+            {% csrf_token %}
+            <label for="nota" class="form-label">Nota (1-10):</label>
+            <select id="nota" name="nota" class="form-select" required>
+                <option value="" disabled selected>Selecione uma nota</option>
+                {% for i in "1234567891" %}
+                    <option value="{{ forloop.counter }}">{{ forloop.counter }}</option>
+                {% endfor %}
+            </select>
+
+            
+            <label for="comentario" class="form-label">Comentário:</label>
+            <textarea id="comentario" name="comentario" class="form-textarea" rows="5" placeholder="Escreva seu comentário aqui..." required></textarea>
+            <br>
+            <button type="submit" class="submit-button">Enviar Avaliação</button>
     </form>
 </body>
 </html>
